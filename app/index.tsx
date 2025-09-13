@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import Category from 'components/categories/Category';
 import ProductCategoryList from 'components/categories/ProductCategoryList';
+import CurrentLocation from 'components/location/CurrentLocation';
 import { useRouter } from 'expo-router';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -25,7 +26,12 @@ const Main = () => {
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ backgroundColor: 'white', paddingBottom: 210 }}>
       <View className={styles.main}>
-        <View className={styles.banner}></View>
+        <View className={styles.banner}>
+          <View className="absolute -bottom-7 w-full px-4">
+            <CurrentLocation city="San Francisco" state="CA" />
+          </View>
+        </View>
+
         <SafeAreaView className={styles.container} style={{ gap: 32 }}>
           <TouchableOpacity className="w-full" onPress={() => router.push('/search')}>
             <SearchBar value="" onChange={() => {}} readOnly />
@@ -64,7 +70,7 @@ const Main = () => {
 
 const styles = {
   main: ``,
-  banner: `h-1/5 bg-indigo-500 items-center justify-center`,
+  banner: `h-1/5 bg-indigo-500 items-center justify-center relative`,
   container: `flex-col items-center px-4`,
   categories: `w-full`,
   productList: `w-full`,
