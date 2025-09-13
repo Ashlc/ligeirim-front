@@ -4,7 +4,7 @@ import IconButton from 'components/inputs/IconButton';
 import { SearchBar } from 'components/inputs/SearchBar';
 import ProductCard from 'components/products/ProductCard';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { IProductCategory } from 'interfaces';
+import { ICategory } from 'interfaces';
 import { useState } from 'react';
 import { Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -16,7 +16,7 @@ const ProductsPage = () => {
     filters: string;
     category: string;
   }>();
-  const [selectedCategory, setSelectedCategory] = useState<IProductCategory | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<ICategory | null>(null);
   const router = useRouter();
   const { data: categories = [] } = useQuery({
     queryKey: ['categories'],
@@ -33,13 +33,19 @@ const ProductsPage = () => {
   const { data: products = [] } = useQuery({
     queryKey: ['products', query, selectedCategory, filters],
     queryFn: async () => {
-      const res = await productService.getProducts({
-        query,
-        category: category ? parseInt(category) : null,
-      });
-      return res;
+      if (category) {
+        const res = await productService.getCategorizedProducts(parseInt(category));
+        return res[0].products;
+      } else {
+        const res = await productService.getProducts({
+          query,
+          category: category ? parseInt(category) : null,
+        });
+        return res;
+      }
     },
   });
+
   return (
     <SafeAreaView style={{ backgroundColor: '#fff' }}>
       <ScrollView
@@ -97,9 +103,8 @@ const ProductsPage = () => {
             marginTop: 18,
             marginBottom: 32,
           }}>
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} grow />
-          ))}
+          {products &&
+            products.map((product) => <ProductCard key={product.id} product={product} grow />)}
         </View>
       </ScrollView>
     </SafeAreaView>
