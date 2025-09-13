@@ -24,7 +24,7 @@ const Main = () => {
     <ScrollView
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ backgroundColor: 'white', paddingBottom: 210 }}>
-      <View className={styles.banner}>
+      <View className={styles.banner} style={{ height: 180 }}>
         <View style={{ position: 'absolute', bottom: 40, alignItems: 'center', gap: 8 }}>
           <Text className="font text-3xl font-bold text-white">Compre Ligeirim em</Text>
         </View>
@@ -33,7 +33,7 @@ const Main = () => {
         </View>
       </View>
 
-      <View className={styles.container} style={{ gap: 24, padding: 16, paddingTop: 8 }}>
+      <View className={styles.container} style={{ gap: 24, padding: 16, paddingTop: 44 }}>
         <TouchableOpacity className="w-full" onPress={() => router.push('/search')}>
           <SearchBar value="" onChange={() => {}} readOnly />
         </TouchableOpacity>
@@ -65,7 +65,7 @@ const Main = () => {
 };
 
 const styles = {
-  banner: `h-1/5 bg-indigo-500 items-center justify-center relative`,
+  banner: `bg-indigo-500 items-center justify-center relative`,
   container: `flex-col items-center px-4 `,
   categories: `w-full`,
   productList: `w-full`,
