@@ -12,7 +12,7 @@ export interface ICardInfo {
 }
 
 export type PaymentMethod = 'CARTAO' | 'PIX';
-export type OrderStatus = 'COMPLETED' | 'DRAFT';
+export type OrderStatus = 'COMPLETED' | 'DRAFT' | 'ON GOING';
 
 export interface IOrder {
   id: number;

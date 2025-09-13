@@ -74,7 +74,7 @@ const CartPage = () => {
         <View style={{ paddingHorizontal: 16, gap: 24, backgroundColor: 'white' }}>
           <View style={{ gap: 16 }}>
             <SellerInfo
-              size="large"
+              size="medium"
               image={draftOrder?.seller?.image}
               name={draftOrder?.seller?.realName}
               id={draftOrder?.seller?.id}

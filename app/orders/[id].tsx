@@ -3,6 +3,7 @@ import Address from 'components/address/Address';
 import OrderProductList from 'components/cart/OrderProductList';
 import Card from 'components/checkout/Card';
 import DriverInfo from 'components/delivery/DriverInfo';
+import OrderStatus from 'components/orders/OrderStatus';
 import SellerInfo from 'components/seller/SellerInfo';
 import { useLocalSearchParams } from 'expo-router';
 import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
@@ -47,6 +48,7 @@ const OrderPage = () => {
               name={order?.seller?.realName}
               id={order?.seller?.id}
             />
+            <OrderStatus status={order.status} />
             <Text className="text-lg font-semibold" style={{ marginTop: 12, marginBottom: 8 }}>
               Produtos
             </Text>

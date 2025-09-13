@@ -66,7 +66,7 @@ const AddedProduct = ({ product, readonly, onQuantityChange, onRemove }: AddedPr
 
 const styles = {
   card: `flex-row items-center justify-between`,
-  image: `w-16 h-16 rounded-lg bg-gray-200`,
+  image: `w-20 h-20 rounded-lg bg-gray-200`,
   title: `text-base font-semibold`,
   price: `text-lg font-bold text-indigo-600`,
   quantity: `text-lg font-bold`,

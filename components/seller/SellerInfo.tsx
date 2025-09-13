@@ -5,10 +5,22 @@ type SellerInfoProps = {
   image: string;
   name: string;
   id: number;
-  size?: 'small' | 'large';
+  size?: 'small' | 'medium' | 'large';
 };
 
 const SellerInfo = ({ image, name, id, size = 'small' }: SellerInfoProps) => {
+  const sizes = {
+    small: 42,
+    medium: 64,
+    large: 72,
+  };
+
+  const fontSizes = {
+    small: 14,
+    medium: 16,
+    large: 18,
+  };
+
   return (
     <View
       style={{
@@ -21,12 +33,14 @@ const SellerInfo = ({ image, name, id, size = 'small' }: SellerInfoProps) => {
       <Image
         className={'rounded-full bg-gray-200'}
         source={{ uri: image }}
-        width={size === 'small' ? 42 : 64}
-        height={size === 'small' ? 42 : 64}
+        width={sizes[size]}
+        height={sizes[size]}
       />
       <View style={{ flexDirection: 'column', gap: 4, flexGrow: 1 }}>
-        <Text className={`font-semibold ${size === 'small' ? '' : 'text-lg'}`}>{name}</Text>
-        {size === 'large' && (
+        <Text className={`font-semibold`} style={{ fontSize: fontSizes[size] }}>
+          {name}
+        </Text>
+        {size === 'medium' && (
           <Link href={`/store/${id}`} className="text-sm font-semibold text-indigo-500">
             Ver mais itens da loja
           </Link>
