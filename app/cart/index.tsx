@@ -149,7 +149,7 @@ const CartPage = () => {
               <Card card={user.cardsInfos[0]} key={user.cardsInfos[0].id} />
             )}
           </View>
-          <Button title="Concluir pedido" onPress={() => router.push('/order/1')} />
+          <Button title="Concluir pedido" onPress={() => router.push('/orders/1')} />
         </View>
       </ScrollView>
     </SafeAreaView>
