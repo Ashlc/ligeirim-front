@@ -33,24 +33,13 @@ export type ProductSize = 'PP' | 'P' | 'M' | 'G' | 'GG' | 'XG' | 'XG1' | 'XG2' |
 
 export interface ISellerProduct {
   id: number;
-  careLevel: CareLevel;
-  description: string;
-  details?: ISellerProductDetails[];
-  image: string;
-  orderProducts?: IOrderProduct[];
-  price: number;
-  product?: IProduct;
-  productId: number;
-  seller?: ISeller;
-  title: string;
-  sellerId: number;
+  name: string;
+  category: ICategory;
 }
 
 export interface ISellerProductDetails {
   id: number;
   color: ProductColor;
-  sellerProduct?: ISellerProduct;
-  sellerProductId?: string;
   size: ProductSize;
   stock: number;
 }
@@ -63,24 +52,21 @@ export interface ICategory {
 
 export interface IProductResponse {
   id: number;
+  title: string;
+  price: number;
+  image: string;
+  description: string;
   careLevel: CareLevel;
   category?: IProductCategory;
-  description: string;
-  details?: ISellerProductDetails[];
-  image: string;
-  orderProducts?: IOrderProduct[];
-  price: number;
-  product?: IProduct;
+  product?: ISellerProduct[];
   seller?: {
-    id: 1;
-    realName: 'Loja do João';
+    sellerId: number;
+    userId: number;
+    fantasyName: string;
+    companyName: string;
     image: string;
   };
-  sellerProducts?: ISellerProduct[];
-  title: string;
-  quantity?: number;
-  size?: ProductSize;
-  color?: ProductColor;
+  details?: ISellerProductDetails[];
 }
 
 export interface ICategorizedProduct {
