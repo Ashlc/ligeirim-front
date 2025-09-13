@@ -8,9 +8,9 @@ const orderStatus = {
 
 export const orderStatusColor = {
   DRAFT: 'text-gray-500',
-  PENDING: 'text-orange-500',
+  PENDING: 'text-indigo-500',
   SHIPPED: 'text-blue-500',
-  COMPLETED: 'text-emerald-500',
+  COMPLETED: 'text-indigo-500',
   CANCELED: 'text-red-500',
 };
 

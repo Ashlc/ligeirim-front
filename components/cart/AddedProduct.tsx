@@ -7,12 +7,27 @@ import { Image, Text, View } from 'react-native';
 type AddedProductProps = {
   product: IOrderProduct;
   readonly?: boolean;
+  onQuantityChange?: (productId: number, newQuantity: number) => void;
+  onRemove?: (productId: number) => void;
 };
 
-const AddedProduct = ({ product, readonly }: AddedProductProps) => {
+const AddedProduct = ({ product, readonly, onQuantityChange, onRemove }: AddedProductProps) => {
   const formattedPrice = `R$ ${product.price.toLocaleString('pt-BR', {
     minimumFractionDigits: 2,
   })}`;
+
+  const handleIncrease = () => {
+    onQuantityChange?.(product.id, product.quantity + 1);
+  };
+
+  const handleDecrease = () => {
+    onQuantityChange?.(product.id, product.quantity - 1);
+  };
+
+  const handleRemove = () => {
+    onRemove?.(product.id);
+  };
+
   return (
     <View className={styles.card}>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, flex: 1 }}>
@@ -31,9 +46,9 @@ const AddedProduct = ({ product, readonly }: AddedProductProps) => {
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
         {!readonly && (
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-            <IconButton icon="remove" size={20} />
+            <IconButton icon="remove" size={20} onPress={handleDecrease} />
             <Text className={styles.quantity}>{product.quantity}</Text>
-            <IconButton icon="add" size={20} />
+            <IconButton icon="add" size={20} onPress={handleIncrease} />
           </View>
         )}
         {readonly && (
@@ -41,7 +56,9 @@ const AddedProduct = ({ product, readonly }: AddedProductProps) => {
             <Text className={styles.quantityText}>{product.quantity}</Text>
           </View>
         )}
-        {!readonly && <IconButton icon="trash-outline" size={24} color="crimson" />}
+        {!readonly && (
+          <IconButton icon="trash-outline" size={24} color="slateblue" onPress={handleRemove} />
+        )}
       </View>
     </View>
   );
@@ -49,9 +66,9 @@ const AddedProduct = ({ product, readonly }: AddedProductProps) => {
 
 const styles = {
   card: `flex-row items-center justify-between`,
-  image: `w-20 h-20 rounded-lg bg-gray-200`,
+  image: `w-16 h-16 rounded-lg bg-gray-200`,
   title: `text-base font-semibold`,
-  price: `text-lg font-bold text-rose-600`,
+  price: `text-lg font-bold text-indigo-600`,
   quantity: `text-lg font-bold`,
   quantityBox: `w-8 h-8 items-center justify-center rounded bg-gray-200`,
   quantityText: `font-semibold text-gray-500`,

@@ -1,22 +1,21 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import Address from 'components/address/Address';
 import OrderProductList from 'components/cart/OrderProductList';
 import Card from 'components/checkout/Card';
-import Pix from 'components/checkout/Pix';
-import Button from 'components/inputs/Button';
+import DriverInfo from 'components/delivery/DriverInfo';
 import SellerInfo from 'components/seller/SellerInfo';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { orderService } from 'services/orderService';
 import { userService } from 'services/userService';
 
-const CartPage = () => {
-  const router = useRouter();
-  const qc = useQueryClient();
-  const { data: draftOrder, isLoading } = useQuery({
-    queryKey: ['draftOrder'],
-    queryFn: async () => orderService.getDraftOrder(),
+const OrderPage = () => {
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const { data: order, isLoading } = useQuery({
+    queryKey: ['order', id],
+    queryFn: async () => orderService.getOrderById(Number(id)),
+    enabled: !!id,
   });
 
   const { data: user } = useQuery({
@@ -24,43 +23,12 @@ const CartPage = () => {
     queryFn: async () => userService.getMe(1),
   });
 
-  const updateOrderMutation = useMutation({
-    mutationFn: (params: { productId: number; quantity: number }) =>
-      orderService.updateDraftOrder(params.productId, params.quantity),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ['draftOrder'] });
-    },
-  });
-
-  const removeOrderProductMutation = useMutation({
-    mutationFn: (productId: number) => orderService.removeProductFromDraftOrder(productId),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ['draftOrder'] });
-    },
-  });
-
-  const handleQuantityChange = (productId: number, newQuantity: number) => {
-    if (newQuantity > 0) {
-      updateOrderMutation.mutate({ productId, quantity: newQuantity });
-    } else {
-      removeOrderProductMutation.mutate(productId);
-    }
-  };
-
-  const handleRemove = (productId: number) => {
-    removeOrderProductMutation.mutate(productId);
-  };
-
-  if (!draftOrder || isLoading) {
-    return (
-      <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator color={'#432dd7'} />
-      </SafeAreaView>
-    );
+  if (!order || isLoading) {
+    return <ActivityIndicator color={'#ec003f'} />;
   }
 
   const calculateTotal = () => {
-    return draftOrder.products.reduce((total, product) => {
+    return order.products.reduce((total, product) => {
       return total + product.price * product.quantity;
     }, 0);
   };
@@ -75,18 +43,14 @@ const CartPage = () => {
           <View style={{ gap: 16 }}>
             <SellerInfo
               size="large"
-              image={draftOrder?.seller?.image}
-              name={draftOrder?.seller?.realName}
-              id={draftOrder?.seller?.id}
+              image={order?.seller?.image}
+              name={order?.seller?.realName}
+              id={order?.seller?.id}
             />
             <Text className="text-lg font-semibold" style={{ marginTop: 12, marginBottom: 8 }}>
               Produtos
             </Text>
-            <OrderProductList
-              products={draftOrder?.products || []}
-              onQuantityChange={handleQuantityChange}
-              onRemove={handleRemove}
-            />
+            <OrderProductList products={order?.products || []} readonly />
             <View
               style={{ borderBottomWidth: 1, marginVertical: 12 }}
               className="border-gray-200"
@@ -132,28 +96,31 @@ const CartPage = () => {
               </Text>
             </View>
           </View>
+          {order.driver && (
+            <View className="border-gray-200" style={{ marginTop: 16, gap: 12 }}>
+              <Text className="text-xl font-semibold">Entregador</Text>
+              <DriverInfo
+                name={order.driver.name || ''}
+                plate={order.driver.plate || ''}
+                vehicle={order.driver.vehicle || ''}
+                image={order.driver.image || ''}
+              />
+            </View>
+          )}
           <View className="border-gray-200" style={{ marginTop: 16, gap: 12 }}>
             <Text className="text-xl font-semibold">Endereço de entrega</Text>
-            {!user?.address ? (
-              <Text className="font-semibold text-indigo-600">Adicionar endereço</Text>
-            ) : (
-              <Address address={user.address} />
-            )}
+            {user?.address && <Address address={user.address} readonly />}
           </View>
           <View className="border-gray-200" style={{ marginTop: 16, gap: 12 }}>
             <Text className="text-xl font-semibold">Método de pagamento</Text>
-            <Pix />
-            {!user?.cardsInfos || user.cardsInfos.length === 0 ? (
-              <Text className="font-semibold text-indigo-600">Adicionar cartão de crédito</Text>
-            ) : (
-              <Card card={user.cardsInfos[0]} key={user.cardsInfos[0].id} />
+            {user?.cardsInfos && user.cardsInfos.length > 0 && (
+              <Card card={user.cardsInfos[0]} readonly />
             )}
           </View>
-          <Button title="Concluir pedido" onPress={() => router.push('/order/1')} />
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-export default CartPage;
+export default OrderPage;

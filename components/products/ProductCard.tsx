@@ -37,7 +37,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             style={{
               fontSize: 16,
               fontWeight: '500',
-              color: 'crimson',
+              color: 'slateblue',
               marginTop: 4,
             }}>
             {product.price && formattedPrice}

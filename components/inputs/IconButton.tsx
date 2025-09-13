@@ -6,11 +6,19 @@ type IconButtonProps = {
   disabled?: boolean;
   size?: number;
   color?: string;
+  customStyle?: string;
 };
 
-const IconButton = ({ icon, onPress, disabled, size = 20, color = 'gray' }: IconButtonProps) => {
+const IconButton = ({
+  icon,
+  onPress,
+  disabled,
+  size = 20,
+  color = 'gray',
+  customStyle,
+}: IconButtonProps) => {
   return (
-    <Pressable onPress={onPress} disabled={disabled} className={styles.button}>
+    <Pressable onPress={onPress} disabled={disabled} className={`${styles.button} ${customStyle}`}>
       {icon && <Ionicons name={icon} size={size} color={color} />}
     </Pressable>
   );

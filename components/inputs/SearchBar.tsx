@@ -3,7 +3,7 @@ import { TextInput, View } from 'react-native';
 
 type SearchBarProps = {
   value: string;
-  onChange: (text: string) => void;
+  onChange?: (text: string) => void;
   autoFocus?: boolean;
   readOnly?: boolean;
 };

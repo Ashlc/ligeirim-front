@@ -82,7 +82,7 @@ const styles = {
   image: `rounded-lg bg-gray-200`,
   quantityBox: `w-6 h-6  items-center justify-center rounded bg-gray-200`,
   quantityText: `font-semibold text-gray-500`,
-  totalPrice: `font-bold text-rose-600`,
+  totalPrice: `font-bold text-indigo-600`,
 };
 
 export default OrderHistoryCard;

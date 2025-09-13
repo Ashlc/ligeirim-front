@@ -16,10 +16,8 @@ const SellerInfo = ({ image, name, id, size = 'small' }: SellerInfoProps) => {
         alignItems: 'center',
         gap: 12,
         marginBottom: 8,
-        borderTopWidth: 1,
         paddingTop: 24,
-      }}
-      className="border-gray-200">
+      }}>
       <Image
         className={'rounded-full bg-gray-200'}
         source={{ uri: image }}
@@ -29,7 +27,7 @@ const SellerInfo = ({ image, name, id, size = 'small' }: SellerInfoProps) => {
       <View style={{ flexDirection: 'column', gap: 4, flexGrow: 1 }}>
         <Text className={`font-semibold ${size === 'small' ? '' : 'text-lg'}`}>{name}</Text>
         {size === 'large' && (
-          <Link href={`/store/${id}`} className="text-sm font-semibold text-rose-500">
+          <Link href={`/store/${id}`} className="text-sm font-semibold text-indigo-500">
             Ver mais itens da loja
           </Link>
         )}

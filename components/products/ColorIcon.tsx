@@ -12,13 +12,13 @@ const ColorIcon = ({ color, variant = 'small', onPress, selected = false }: Colo
   const colors: Record<ProductColor, string> = {
     AMARELO: 'bg-yellow-500',
     AZUL: 'bg-blue-500',
-    BEGE: 'bg-orange-100',
+    BEGE: 'bg-indigo-100',
     BRANCO: 'bg-white',
     CINZA: 'bg-gray-500',
-    LARANJA: 'bg-orange-500',
+    LARANJA: 'bg-indigo-500',
     ROSA: 'bg-pink-500',
     ROXO: 'bg-purple-500',
-    VERDE: 'bg-green-500',
+    VERDE: 'bg-indigo-500',
     VERMELHO: 'bg-red-500',
   };
   return (

@@ -33,22 +33,43 @@ const Navbar = () => {
       route: '/profile',
     },
   ];
+  const cartItemCount = 1;
   return (
     <View className={styles.container} style={{ elevation: 10, paddingTop: 12, paddingBottom: 18 }}>
       {actions.map((action) => {
         const isActive = pathname === action.route;
+        const isCart = action.name === 'Carrinho';
         return (
           <Pressable
             key={action.name}
             className={styles.actionButton}
             onPress={() => router.push(action.route)}>
-            <Ionicons
-              name={action.icon as keyof typeof Ionicons.glyphMap}
-              size={24}
-              color={isActive ? 'crimson' : '#6b7280'}
-            />
+            <View>
+              <Ionicons
+                name={action.icon as keyof typeof Ionicons.glyphMap}
+                size={24}
+                color={isActive ? 'slateblue' : '#6b7280'}
+              />
+              {isCart && cartItemCount > 0 && (
+                <View
+                  style={{
+                    position: 'absolute',
+                    right: -6,
+                    top: -3,
+                    width: 16,
+                    height: 16,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                  className="rounded-full bg-indigo-500">
+                  <Text style={{ color: 'white', fontSize: 10, fontWeight: 'bold' }}>
+                    {cartItemCount}
+                  </Text>
+                </View>
+              )}
+            </View>
             <Text
-              className={`${styles.actionText} ${isActive ? 'text-rose-500' : 'text-gray-500'}`}>
+              className={`${styles.actionText} ${isActive ? 'text-indigo-500' : 'text-gray-500'}`}>
               {action.name}
             </Text>
           </Pressable>

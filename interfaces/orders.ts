@@ -1,7 +1,7 @@
 import { ISellerProduct, ProductColor, ProductSize } from './products';
-import { IClient, ISeller } from './users';
+import { IClient, IDriver, ISeller } from './users';
 
-export interface CardInfo {
+export interface ICardInfo {
   id: number;
   brand: string;
   expirationDate: string;
@@ -27,6 +27,7 @@ export interface IOrder {
   seller: ISeller;
   size?: ProductSize;
   products: IOrderProduct[];
+  driver?: IDriver;
 }
 
 export interface IOrderProduct {

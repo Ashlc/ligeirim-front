@@ -19,9 +19,16 @@ export const getMe = async (userId: number): Promise<IUserProfile> => {
     cardsInfos: [
       {
         id: 1,
-        brand: 'Visa',
+        brand: 'visa',
         last4: '1234',
         expirationDate: '12/25',
+        clientId: userId,
+      },
+      {
+        id: 2,
+        brand: 'mastercard',
+        last4: '5678',
+        expirationDate: '10/26',
         clientId: userId,
       },
     ],

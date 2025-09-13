@@ -4,13 +4,27 @@ import AddedProduct from './AddedProduct';
 
 type OrderProductListProps = {
   products: IOrderProduct[];
+  onQuantityChange?: (productId: number, newQuantity: number) => void;
+  onRemove?: (productId: number) => void;
+  readonly?: boolean;
 };
 
-const OrderProductList = ({ products }: OrderProductListProps) => {
+const OrderProductList = ({
+  products,
+  onQuantityChange,
+  onRemove,
+  readonly,
+}: OrderProductListProps) => {
   return (
-    <View>
+    <View style={{ gap: 12 }}>
       {products.map((product) => (
-        <AddedProduct key={product.id} product={product} />
+        <AddedProduct
+          key={product.id}
+          product={product}
+          onQuantityChange={onQuantityChange}
+          onRemove={onRemove}
+          readonly={readonly}
+        />
       ))}
     </View>
   );

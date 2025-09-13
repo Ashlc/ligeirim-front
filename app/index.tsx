@@ -64,7 +64,7 @@ const Main = () => {
 
 const styles = {
   main: ``,
-  banner: `h-1/5 bg-rose-500 items-center justify-center`,
+  banner: `h-1/5 bg-indigo-500 items-center justify-center`,
   container: `flex-col items-center px-4`,
   categories: `w-full`,
   productList: `w-full`,

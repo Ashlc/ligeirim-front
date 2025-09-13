@@ -13,7 +13,7 @@ const Category = ({ icon, name, id, size = 'small' }: CategoryProps) => {
     return (
       <View className={styles.container}>
         <View className={styles.iconContainer}>
-          <Ionicons name={icon} size={24} color="crimson" />
+          <Ionicons name={icon} size={24} color="slateblue" />
         </View>
         <Text className={styles.name}>{name}</Text>
       </View>
@@ -21,7 +21,7 @@ const Category = ({ icon, name, id, size = 'small' }: CategoryProps) => {
   else if (size === 'large')
     return (
       <View className={styles.largeContainer}>
-        <Ionicons name={icon} size={24} color="crimson" />
+        <Ionicons name={icon} size={24} color="slateblue" />
         <Text className="text-center">{name}</Text>
       </View>
     );
@@ -29,8 +29,8 @@ const Category = ({ icon, name, id, size = 'small' }: CategoryProps) => {
 
 const styles = {
   container: `flex flex-col items-center gap-2 w-[72px]`,
-  largeContainer: `flex flex-row items-center gap-4 grow p-4 bg-rose-100 rounded-lg`,
-  iconContainer: `w-16 h-16 rounded-lg bg-rose-200 items-center justify-center`,
+  largeContainer: `flex flex-row items-center gap-4 grow p-4 bg-indigo-100 rounded-lg`,
+  iconContainer: `w-16 h-16 rounded-lg bg-indigo-200 items-center justify-center`,
   name: `text-sm text-center`,
 };
 

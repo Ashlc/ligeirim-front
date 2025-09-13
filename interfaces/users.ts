@@ -1,4 +1,4 @@
-import { CardInfo, IOrder } from './orders';
+import { ICardInfo, IOrder } from './orders';
 import { ISellerProduct } from './products';
 
 export type DriverCategory = 'BIKE' | 'MOTORCYCLE' | 'CAR';
@@ -43,6 +43,10 @@ export interface IDriver {
   bankingInfoId: number;
   user?: IUser;
   bankingInfo?: IBankingInfo;
+  name?: string;
+  plate?: string;
+  vehicle?: string;
+  image?: string;
 }
 
 export interface ISeller {
@@ -61,7 +65,7 @@ export interface IClient {
   userId: number;
   user?: IUser;
   orders?: IOrder[];
-  cardInfos?: CardInfo[];
+  cardInfos?: ICardInfo[];
 }
 
 export interface IUserProfile {
@@ -71,5 +75,5 @@ export interface IUserProfile {
   identifier: string;
   documentPath: string;
   address: IAddress;
-  cardsInfos: CardInfo[];
+  cardsInfos: ICardInfo[];
 }

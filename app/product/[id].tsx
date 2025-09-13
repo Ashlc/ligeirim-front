@@ -163,6 +163,6 @@ const styles = {
   description: `text-gray-600`,
   seller: `font-semibold`,
   quantityContainer: `flex-row items-center border border-gray-300 rounded-lg overflow-hidden`,
-  removeIcon: `p-4 border-r border-gray-300 bg-rose-500`,
-  addIcon: `p-4 border-l border-gray-300 bg-rose-500`,
+  removeIcon: `p-4 border-r border-gray-300 bg-indigo-500`,
+  addIcon: `p-4 border-l border-gray-300 bg-indigo-500`,
 };
