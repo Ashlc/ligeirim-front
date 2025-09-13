@@ -35,7 +35,7 @@ const Navbar = () => {
   ];
   const cartItemCount = 1;
   return (
-    <View className={styles.container} style={{ elevation: 10, paddingTop: 12, paddingBottom: 18 }}>
+    <View className={styles.container} style={{ elevation: 10, paddingTop: 12, paddingBottom: 20 }}>
       {actions.map((action) => {
         const isActive = pathname === action.route;
         const isCart = action.name === 'Carrinho';
@@ -80,7 +80,7 @@ const Navbar = () => {
 };
 
 const styles = {
-  container: `w-full bg-white border-t border-gray-200 flex-row justify-around items-center absolute bottom-0 left-0`,
+  container: `w-full bg-white border-t border-gray-200 flex-row justify-around items-center absolute bottom-0 left-0 shadow-xl`,
   actionButton: `flex flex-col items-center justify-center`,
   actionText: `text-xs mt-1 text-gray-600`,
 };

@@ -10,7 +10,7 @@ const CurrentLocation = ({ city, state }: Props) => {
   return (
     <View
       style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}
-      className="h-14 rounded-lg border border-gray-200 bg-white px-4 shadow-md">
+      className="h-14 rounded-xl border border-gray-200 bg-white px-4 shadow-md">
       <Ionicons name="location-outline" size={18} color="slateblue" />
       <Text className="font-medium text-gray-700">
         {city}, {state}
