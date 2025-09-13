@@ -8,7 +8,7 @@ import SellerInfo from 'components/seller/SellerInfo';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ProductColor, ProductSize } from 'interfaces';
 import { useState } from 'react';
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { productService } from 'services/productService';
 import { randomShippingTime } from 'utils/shipping';
@@ -35,8 +35,23 @@ const ProductPage = () => {
     }
   };
 
-  const sizes = Array.from(new Set(product?.details?.map((detail) => detail.size))) || [];
-  const colors = Array.from(new Set(product?.details?.map((detail) => detail.color))) || [];
+  const sizes =
+    Array.from(
+      new Set(product?.details?.filter((detail) => detail.size).map((detail) => detail.size))
+    ) || [];
+
+  const colors =
+    Array.from(
+      new Set(product?.details?.filter((detail) => detail.color).map((detail) => detail.color))
+    ) || [];
+
+  if (!product || isLoading) {
+    return (
+      <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator color={'#432dd7'} />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={{ backgroundColor: 'white', flex: 1, paddingTop: 8 }}>
@@ -137,9 +152,10 @@ const ProductPage = () => {
           <Button title="Adicionar ao carrinho" onPress={() => {}} />
 
           <SellerInfo
-            name={product?.seller?.realName || ''}
+            name={product?.seller?.fantasyName || ''}
             image={product?.seller?.image || ''}
-            id={product?.seller?.id || 0}
+            id={product?.seller?.sellerId || 0}
+            size="medium"
           />
 
           {/* Description */}

@@ -25,7 +25,11 @@ const OrderPage = () => {
   });
 
   if (!order || isLoading) {
-    return <ActivityIndicator color={'#ec003f'} />;
+    return (
+      <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator color={'#432dd7'} />
+      </SafeAreaView>
+    );
   }
 
   const calculateTotal = () => {
