@@ -1,4 +1,5 @@
 import { IOrder } from 'interfaces';
+import { BASE_URL } from './api';
 
 let draftOrder: IOrder | null = {
   id: 3,
@@ -234,10 +235,28 @@ const getOrderById = async (orderId: number): Promise<IOrder | null> => {
   return new Promise((resolve) => setTimeout(() => resolve(order || null), 500));
 };
 
+const finalizeDraftOrder = async (id: number) => {
+  const data = {
+    status: 'ONGOING',
+    paymentMethod: 'CARTAO',
+  };
+  const res = await fetch(`${BASE_URL}/orders/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) {
+    throw new Error('Failed to finalize order');
+  }
+};
+
 export const orderService = {
   getUserOrders,
   getDraftOrder,
   updateDraftOrder,
   removeProductFromDraftOrder,
   getOrderById,
+  finalizeDraftOrder,
 };

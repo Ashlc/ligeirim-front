@@ -29,14 +29,12 @@ const getCategories = async (): Promise<ICategory[]> => {
 
 export const getCategorizedProducts = async (id?: number): Promise<ICategorized[]> => {
   try {
-    const res = await fetch(`${BASE_URL}/products/category${id ? `/${id}` : ''}`, {
+    const res = await fetch(`${BASE_URL}/products/category${id ? `?categoryId=${id}` : ''}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     });
-
-    console.log(res);
 
     if (!res.ok) {
       throw new Error(`Erro ao buscar categorias: ${res.status}`);

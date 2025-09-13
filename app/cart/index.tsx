@@ -10,6 +10,7 @@ import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { orderService } from 'services/orderService';
 import { userService } from 'services/userService';
+import { MOCK_USER_ID } from '../../constants';
 
 const CartPage = () => {
   const router = useRouter();
@@ -21,10 +22,10 @@ const CartPage = () => {
 
   const { data: user } = useQuery({
     queryKey: ['me'],
-    queryFn: async () => userService.getMe(1),
+    queryFn: async () => userService.getMe(MOCK_USER_ID),
   });
 
-  const updateOrderMutation = useMutation({
+  const { mutate: updateOrder } = useMutation({
     mutationFn: (params: { productId: number; quantity: number }) =>
       orderService.updateDraftOrder(params.productId, params.quantity),
     onSuccess: () => {
@@ -32,7 +33,7 @@ const CartPage = () => {
     },
   });
 
-  const removeOrderProductMutation = useMutation({
+  const { mutate: removeProduct } = useMutation({
     mutationFn: (productId: number) => orderService.removeProductFromDraftOrder(productId),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['draftOrder'] });
@@ -41,15 +42,19 @@ const CartPage = () => {
 
   const handleQuantityChange = (productId: number, newQuantity: number) => {
     if (newQuantity > 0) {
-      updateOrderMutation.mutate({ productId, quantity: newQuantity });
+      updateOrder({ productId, quantity: newQuantity });
     } else {
-      removeOrderProductMutation.mutate(productId);
+      removeProduct(productId);
     }
   };
 
-  const handleRemove = (productId: number) => {
-    removeOrderProductMutation.mutate(productId);
-  };
+  const { mutate: finalizeOrder } = useMutation({
+    mutationFn: () => orderService.finalizeDraftOrder(draftOrder?.id || 0),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['draftOrder'] });
+      router.push(`/orders/${draftOrder?.id}`);
+    },
+  });
 
   if (!draftOrder || isLoading) {
     return (
@@ -66,6 +71,7 @@ const CartPage = () => {
   };
 
   const shippingFee = 10.0;
+
   return (
     <SafeAreaView style={{ backgroundColor: '#fff' }}>
       <ScrollView
@@ -74,7 +80,7 @@ const CartPage = () => {
         <View style={{ paddingHorizontal: 16, gap: 24, backgroundColor: 'white' }}>
           <View style={{ gap: 16 }}>
             <SellerInfo
-              size="medium"
+              size="large"
               image={draftOrder?.seller?.image}
               name={draftOrder?.seller?.realName}
               id={draftOrder?.seller?.id}
@@ -85,7 +91,7 @@ const CartPage = () => {
             <OrderProductList
               products={draftOrder?.products || []}
               onQuantityChange={handleQuantityChange}
-              onRemove={handleRemove}
+              onRemove={removeProduct}
             />
             <View
               style={{ borderBottomWidth: 1, marginVertical: 12 }}
@@ -149,7 +155,7 @@ const CartPage = () => {
               <Card card={user.cardsInfos[0]} key={user.cardsInfos[0].id} />
             )}
           </View>
-          <Button title="Concluir pedido" onPress={() => router.push('/orders/1')} />
+          <Button title="Concluir pedido" onPress={finalizeOrder} />
         </View>
       </ScrollView>
     </SafeAreaView>
