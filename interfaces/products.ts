@@ -1,6 +1,4 @@
 import { Ionicons } from '@expo/vector-icons';
-import { IOrderProduct } from './orders';
-import { ISeller } from './users';
 
 export interface IProductCategory {
   id: number;
@@ -45,7 +43,7 @@ export interface ISellerProductDetails {
 }
 
 export interface ICategory {
-  id: string;
+  id: number;
   icon: keyof typeof Ionicons.glyphMap;
   name: string;
 }

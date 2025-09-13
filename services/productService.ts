@@ -1,9 +1,14 @@
-import { ICategorized, IProductCategory, IProductResponse } from './../interfaces/products';
+import {
+  ICategorized,
+  ICategory,
+  IProductCategory,
+  IProductResponse,
+} from './../interfaces/products';
 import { BASE_URL } from './api';
 
-const getCategories = async (): Promise<IProductCategory[]> => {
+const getCategories = async (): Promise<ICategory[]> => {
   try {
-    const res = await fetch(`${BASE_URL}/products/category`, {
+    const res = await fetch(`${BASE_URL}/categories`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -15,16 +20,16 @@ const getCategories = async (): Promise<IProductCategory[]> => {
     }
 
     const data = await res.json();
-    return data as IProductCategory[];
+    return data as ICategory[];
   } catch (err) {
-    console.error('Erro na chamada getCategorizedProducts:', err);
+    console.error('Erro na chamada getCategories:', err);
     throw err;
   }
 };
 
-export const getCategorizedProducts = async (): Promise<ICategorized[]> => {
+export const getCategorizedProducts = async (id?: number): Promise<ICategorized[]> => {
   try {
-    const res = await fetch(`${BASE_URL}/products/category`, {
+    const res = await fetch(`${BASE_URL}/products/category${id ? `?categoryId=${id}` : ''}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -79,15 +84,15 @@ const getProducts = async ({
 }): Promise<IProductResponse[] | null> => {
   try {
     const params = new URLSearchParams();
-    if (query) params.append("query", query);
-    if (category !== null) params.append("categoryId", category.toString());
+    if (query) params.append('query', query);
+    if (category !== null) params.append('categoryId', category.toString());
 
-    const url = `${BASE_URL}/products/${params.toString() ? `?${params.toString()}` : ""}`;
+    const url = `${BASE_URL}/products/${params.toString() ? `?${params.toString()}` : ''}`;
 
     const res = await fetch(url, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     });
 
@@ -98,7 +103,7 @@ const getProducts = async ({
     const data = await res.json();
     return data;
   } catch (err) {
-    console.error("Erro na chamada getProducts:", err);
+    console.error('Erro na chamada getProducts:', err);
     return null;
   }
 };

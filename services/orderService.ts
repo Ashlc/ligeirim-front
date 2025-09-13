@@ -1,4 +1,5 @@
 import { IOrder } from 'interfaces';
+import { BASE_URL } from './api';
 
 const CART_URL = 'http://192.168.0.15:5000/cart';
 const ORDERS_URL = 'http://192.168.0.15:5000/orders';
@@ -124,10 +125,28 @@ export const getOrderById = async (orderId: number): Promise<IOrder | null> => {
   }
 };
 
+const finalizeDraftOrder = async (id: number) => {
+  const data = {
+    status: 'ONGOING',
+    paymentMethod: 'CARTAO',
+  };
+  const res = await fetch(`${BASE_URL}/orders/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) {
+    throw new Error('Failed to finalize order');
+  }
+};
+
 export const orderService = {
   getUserOrders,
   getDraftOrder,
   updateDraftOrder,
   removeProductFromDraftOrder,
   getOrderById,
+  finalizeDraftOrder,
 };
