@@ -1,237 +1,127 @@
 import { IOrder } from 'interfaces';
 
-let draftOrder: IOrder | null = {
-  id: 3,
-  clientId: 1,
-  totalPrice: 75.5,
-  paymentMethod: 'CARTAO',
-  status: 'DRAFT',
-  completeDate: '2023-03-20',
-  seller: {
-    id: 1,
-    realName: 'Loja Exemplo',
-    userId: 2,
-    bankingInfoId: 1,
-    image: 'https://via.placeholder.com/150',
-    user: {
-      id: 2,
-      name: 'Loja Exemplo',
-      phone: '123456789',
-      address: {
-        street: 'Rua Exemplo',
-        number: '123',
-        city: 'Cidade',
-        state: 'Estado',
-        zipCode: '00000-000',
-        country: 'País',
+const CART_URL = 'http://192.168.0.15:5000/cart';
+const ORDERS_URL = 'http://192.168.0.15:5000/orders';
+
+export const getUserOrders = async (userId: number): Promise<IOrder[]> => {
+  try {
+    const res = await fetch(`${ORDERS_URL}/client/${userId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
       },
-      identifier: '00.000.000/0001-00',
-      documentPath: '',
-    },
-  },
-  products: [
-    {
-      id: 3,
-      quantity: 3,
-      orderId: 3,
-      sellerProductId: 'SP003',
-      title: 'Produto 3',
-      price: 75.5,
-      image: 'https://via.placeholder.com/150',
-    },
-    {
-      id: 4,
-      quantity: 1,
-      orderId: 3,
-      sellerProductId: 'SP004',
-      title: 'Produto 4',
-      price: 25.0,
-      image: 'https://via.placeholder.com/150',
-    },
-  ],
+    });
+
+    if (!res.ok) {
+      console.warn(`Nenhum pedido encontrado para o usuário ${userId}`);
+      return [];
+    }
+
+    const orders = await res.json() as IOrder[];
+
+    return orders
+  } catch (err) {
+    console.error('Erro na chamada getUserOrders:', err);
+    return [];
+  }
 };
 
-const getUserOrders = async (userId: number): Promise<IOrder[]> => {
-  // Simulação de chamada à API para obter pedidos do usuário
-  return [
-    {
-      id: 1,
-      clientId: userId,
-      totalPrice: 100,
-      paymentMethod: 'CARTAO',
-      status: 'COMPLETED',
-      seller: {
-        id: 1,
-        realName: 'Loja Exemplo',
-        image: 'https://via.placeholder.com/150',
-        userId: 2,
-        bankingInfoId: 1,
-        user: {
-          id: 2,
-          name: 'Loja Exemplo',
-          phone: '123456789',
-          address: {
-            street: 'Rua Exemplo',
-            number: '123',
-            city: 'Cidade',
-            state: 'Estado',
-            zipCode: '00000-000',
-            country: 'País',
-          },
-          identifier: '00.000.000/0001-00',
-          documentPath: '',
-        },
+const getDraftOrder = async (clientId: number): Promise<IOrder | null> => {
+  try{
+    const res = await fetch(`${CART_URL}/client/${clientId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
       },
-      completeDate: '2023-01-01',
-      products: [
-        {
-          id: 1,
-          quantity: 2,
-          orderId: 1,
-          sellerProductId: 'SP001',
-          title: 'Produto 1',
-          price: 100,
-          image: 'https://via.placeholder.com/150',
-        },
-        {
-          id: 11,
-          quantity: 1,
-          orderId: 1,
-          color: 'VERMELHO',
-          size: 'M',
-          sellerProductId: 'SP001',
-          title: 'Produto 1',
-          price: 100,
-          image: 'https://via.placeholder.com/150',
-        },
-      ],
-    },
-    {
-      id: 2,
-      clientId: userId,
-      totalPrice: 250,
-      paymentMethod: 'PIX',
-      status: 'COMPLETED',
-      completeDate: '2023-02-15',
-      seller: {
-        id: 1,
-        realName: 'Loja Exemplo',
-        userId: 2,
-        bankingInfoId: 1,
-        image: 'https://via.placeholder.com/150',
-        user: {
-          id: 2,
-          name: 'Loja Exemplo',
-          phone: '123456789',
-          address: {
-            street: 'Rua Exemplo',
-            number: '123',
-            city: 'Cidade',
-            state: 'Estado',
-            zipCode: '00000-000',
-            country: 'País',
-          },
-          identifier: '00.000.000/0001-00',
-          documentPath: '',
-        },
-      },
-      products: [
-        {
-          id: 2,
-          title: 'Produto 2',
-          quantity: 1,
-          orderId: 2,
-          sellerProductId: 'SP002',
-          price: 250,
-          image: 'https://via.placeholder.com/150',
-        },
-      ],
-    },
-    {
-      id: 3,
-      clientId: userId,
-      totalPrice: 75.5,
-      paymentMethod: 'CARTAO',
-      status: 'DRAFT',
-      completeDate: '2023-03-20',
-      seller: {
-        id: 1,
-        realName: 'Loja Exemplo',
-        userId: 2,
-        bankingInfoId: 1,
-        image: 'https://via.placeholder.com/150',
-        user: {
-          id: 2,
-          name: 'Loja Exemplo',
-          phone: '123456789',
-          address: {
-            street: 'Rua Exemplo',
-            number: '123',
-            city: 'Cidade',
-            state: 'Estado',
-            zipCode: '00000-000',
-            country: 'País',
-          },
-          identifier: '00.000.000/0001-00',
-          documentPath: '',
-        },
-      },
-      products: [
-        {
-          id: 3,
-          quantity: 3,
-          orderId: 3,
-          sellerProductId: 'SP003',
-          title: 'Produto 3',
-          price: 75.5,
-          image: 'https://via.placeholder.com/150',
-        },
-      ],
-    },
-  ];
+    });
+
+    if (!res.ok) {
+      console.warn(`Nenhum carrinho encontrado para o cliente ${clientId}`);
+      return null;
+    }
+
+    const data = await res.json();
+
+    return data;
+
+  } catch (err) {
+    console.log('Erro na chamada getDraftOrder')
+    throw err;
+  }
 };
 
-const getDraftOrder = async (): Promise<IOrder | null> => {
-  return new Promise((resolve) => setTimeout(() => resolve(draftOrder), 500));
+const updateDraftOrder = async (productId: number, quantity: number, clientId: number): Promise<{message: string} | null> => {
+  try {
+    const res = await fetch(`${CART_URL}/client/${clientId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify([
+        { seller_product_id: productId, quantity }
+      ]),
+    });
+
+    if (!res.ok) {
+      throw new Error(`Erro ao atualizar carrinho: ${res.status}`);
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.error('Erro na chamada updateDraftOrder:', err);
+    return null;
+  }
 };
 
-const updateDraftOrder = async (productId: number, quantity: number): Promise<IOrder | null> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      if (draftOrder) {
-        const productIndex = draftOrder.products.findIndex((p) => p.id === productId);
-        if (productIndex !== -1) {
-          draftOrder.products[productIndex].quantity = quantity;
-        }
-      }
-      resolve(draftOrder);
-    }, 500);
-  });
+const removeProductFromDraftOrder = async (productId: number, clientId: number, orderId: number): Promise<{message: string} | null> => {
+  try {
+    const res = await fetch(`${CART_URL}/${orderId}/product/${productId}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (!res.ok) {
+      throw new Error(`Erro ao remover produto do carrinho: ${res.status}`);
+    }
+
+    const data = await res.json() as {message: string} | null;
+
+    return data;
+  } catch (err) {
+    console.error('Erro na chamada removeProductFromDraftOrder:', err);
+    return null;
+  }
 };
 
-const removeProductFromDraftOrder = async (productId: number): Promise<IOrder | null> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      if (draftOrder) {
-        draftOrder.products = draftOrder.products.filter((p) => p.id !== productId);
-      }
-      resolve(draftOrder);
-    }, 500);
-  });
-};
+export const getOrderById = async (orderId: number): Promise<IOrder | null> => {
+  try {
+    // Chama o backend para buscar o pedido
+    const res = await fetch(`${CART_URL}/order/${orderId}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    });
 
-const getOrderById = async (orderId: number): Promise<IOrder | null> => {
-  const orders = await getUserOrders(1);
-  const order = orders.find((o) => o.id === orderId);
-  if (order) {
+    if (!res.ok) {
+      console.warn(`Pedido ${orderId} não encontrado`);
+      return null;
+    }
+
+    const order = await res.json() as IOrder;
+
     order.driver = {
+      id: 1,
+      category: 'CAR',
+      userId: 12,
       name: 'João da Silva',
       plate: 'ABC-1234',
       vehicle: 'Honda Civic',
       image: 'https://i.pravatar.cc/150?u=a042581f4e29026704d',
     };
+
+    return order;
+  } catch (err) {
+    console.error('Erro na chamada getOrderById:', err);
+    return null;
   }
-  return new Promise((resolve) => setTimeout(() => resolve(order || null), 500));
 };
 
 export const orderService = {

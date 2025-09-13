@@ -31,8 +31,6 @@ export const getCategorizedProducts = async (): Promise<ICategorized[]> => {
       },
     });
 
-    console.log(res);
-
     if (!res.ok) {
       throw new Error(`Erro ao buscar categorias: ${res.status}`);
     }

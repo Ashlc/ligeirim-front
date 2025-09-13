@@ -40,7 +40,7 @@ export interface IDriver {
   id: number;
   category: DriverCategory;
   userId: number;
-  bankingInfoId: number;
+  bankingInfoId?: number;
   user?: IUser;
   bankingInfo?: IBankingInfo;
   name?: string;
@@ -51,12 +51,10 @@ export interface IDriver {
 
 export interface ISeller {
   id: number;
-  realName: string;
   userId: number;
-  bankingInfoId: number;
-  user?: IUser;
+  fantasyName: string;
+  companyName: string;
   image: string;
-  bankingInfo?: IBankingInfo;
   products?: ISellerProduct[];
 }
 

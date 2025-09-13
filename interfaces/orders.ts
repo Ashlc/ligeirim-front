@@ -18,9 +18,9 @@ export interface IOrder {
   id: number;
   clientId: number;
   totalPrice: number;
-  paymentMethod: PaymentMethod;
+  paymentMethod?: PaymentMethod;
   status: OrderStatus;
-  completeDate: string;
+  completeDate?: string;
   client?: IClient;
   quantity?: number;
   color?: ProductColor;
@@ -36,8 +36,7 @@ export interface IOrderProduct {
   title: string;
   price: number;
   image: string;
-  color?: ProductColor;
-  size?: ProductSize;
+  details: ISellerProduct;
   orderId: number;
   sellerProductId: string;
   order?: IOrder;
