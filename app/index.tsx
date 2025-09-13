@@ -48,9 +48,9 @@ const Main = () => {
             </View>
           </ScrollView>
           <View className={styles.productList} style={{ gap: 20, flexGrow: 1 }}>
-            {categorizedProducts.map((category) => (
+            {categorizedProducts.map((category, i) => (
               <ProductCategoryList
-                key={category.id}
+                key={`product-category-list-${i}-${category.id}`}
                 title={category.name}
                 products={category.products}
               />
