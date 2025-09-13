@@ -18,6 +18,7 @@ export interface IUser {
 export interface IBankingInfo {
   id: number;
   accountNumber: number;
+  image: string;
   holderName: string;
   holderIdentifier: string;
   agency: string;
@@ -41,6 +42,7 @@ export interface ISeller {
   userId: number;
   bankingInfoId: number;
   user?: IUser;
+  image: string;
   bankingInfo?: IBankingInfo;
   products?: SellerProduct[];
 }

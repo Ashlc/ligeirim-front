@@ -1,11 +1,11 @@
-import { SellerProduct } from './products';
-import { IUser } from './users';
+import { ISellerProduct, ProductColor, ProductSize } from './products';
+import { ISeller, IUser } from './users';
 
 export interface Client {
   id: number;
   userId: number;
   user?: IUser;
-  orders?: Order[];
+  orders?: IOrder[];
   cardInfos?: CardInfo[];
 }
 
@@ -21,7 +21,7 @@ export interface CardInfo {
 export type PaymentMethod = 'CARTAO' | 'PIX';
 export type OrderStatus = 'COMPLETED' | 'DRAFT';
 
-export interface Order {
+export interface IOrder {
   id: number;
   clientId: number;
   totalPrice: number;
@@ -29,14 +29,23 @@ export interface Order {
   status: OrderStatus;
   completeDate: string;
   client?: Client;
-  products?: OrderProduct[];
+  quantity?: number;
+  color?: ProductColor;
+  seller: ISeller;
+  size?: ProductSize;
+  products: IOrderProduct[];
 }
 
-export interface OrderProduct {
+export interface IOrderProduct {
   id: number;
   quantity: number;
+  title: string;
+  price: number;
+  image: string;
+  color?: ProductColor;
+  size?: ProductSize;
   orderId: number;
   sellerProductId: string;
-  order?: Order;
-  sellerProduct?: SellerProduct;
+  order?: IOrder;
+  sellerProduct?: ISellerProduct;
 }

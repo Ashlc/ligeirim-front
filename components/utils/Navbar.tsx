@@ -14,7 +14,7 @@ const Navbar = () => {
     },
     {
       name: 'Pesquisar',
-      icon: 'search',
+      icon: 'search-outline',
       route: '/search',
     },
     {
@@ -40,10 +40,10 @@ const Navbar = () => {
             <Ionicons
               name={action.icon as keyof typeof Ionicons.glyphMap}
               size={24}
-              color={isActive ? '#3b82f6' : '#6b7280'}
+              color={isActive ? 'crimson' : '#6b7280'}
             />
             <Text
-              className={`${styles.actionText} ${isActive ? 'text-blue-500' : 'text-gray-500'}`}>
+              className={`${styles.actionText} ${isActive ? 'text-rose-500' : 'text-gray-500'}`}>
               {action.name}
             </Text>
           </Pressable>

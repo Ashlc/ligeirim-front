@@ -10,7 +10,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
     <View className={styles.card}>
       <Image
         source={{ uri: product.image }}
-        style={{ width: 120, height: 120 }}
+        style={{ width: 140, height: 140 }}
         className={styles.image}
       />
       <View className={styles.priceContainer}>
@@ -18,21 +18,23 @@ const ProductCard = ({ product }: ProductCardProps) => {
           {product.title}
         </Text>
         <Text
-          className={
-            styles.price
-          }>{`R$ ${product.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`}</Text>
+          style={{
+            fontSize: 16,
+            fontWeight: '500',
+            color: 'crimson',
+            marginTop: 4,
+          }}>{`R$ ${product.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`}</Text>
       </View>
     </View>
   );
 };
 
 const styles = {
-  card: `w-[120px] overflow-hidden`,
+  card: `w-[140px] overflow-hidden`,
   priceContainer: `space-y-1 mt-2 flex-1 px-1`,
   image: `rounded-lg bg-gray-200`,
   title: `text-sm font-semibold`,
   description: `text-xs text-gray-600`,
-  price: `text-lg font-medium text-blue-600 mt-1`,
 };
 
 export default ProductCard;

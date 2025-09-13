@@ -5,13 +5,16 @@ type SearchBarProps = {
   value: string;
   onChange: (text: string) => void;
   autoFocus?: boolean;
+  readOnly?: boolean;
 };
 
-export const SearchBar = ({ value, onChange, autoFocus }: SearchBarProps) => {
+export const SearchBar = ({ value, onChange, autoFocus, readOnly }: SearchBarProps) => {
   return (
     <View className="relative w-full">
       <TextInput
         placeholder="Pesquisar"
+        readOnly={readOnly}
+        onTouchStart={readOnly ? () => {} : undefined}
         autoFocus={autoFocus}
         className="h-16 w-full rounded-xl border border-gray-300 pl-12 pr-3"
         value={value}

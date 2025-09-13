@@ -14,7 +14,7 @@ export const Button = ({ title, onPress, disabled, icon }: ButtonProps) => {
       onPress={onPress}
       android_ripple={{ color: 'lightgray', radius: 10 }}
       disabled={disabled}
-      className={`${styles.button} ${disabled ? 'bg-gray-400' : 'bg-blue-500'}`}>
+      className={`${styles.button} ${disabled ? 'bg-gray-400' : 'bg-rose-500'}`}>
       {icon && <Ionicons name={icon} size={20} color="white" />}
       <Text className={styles.buttonText}>{title}</Text>
     </Pressable>

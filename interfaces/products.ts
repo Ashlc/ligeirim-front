@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { OrderProduct } from './orders';
+import { IOrderProduct } from './orders';
 import { ISeller } from './users';
 
 export interface IProductCategory {
@@ -32,12 +32,12 @@ export type ProductColor =
 export type ProductSize = 'PP' | 'P' | 'M' | 'G' | 'GG' | 'XG' | 'XG1' | 'XG2' | 'XG3';
 
 export interface ISellerProduct {
-  id: string;
+  id: number;
   careLevel: CareLevel;
   description: string;
   details?: ISellerProductDetails[];
   image: string;
-  orderProducts?: OrderProduct[];
+  orderProducts?: IOrderProduct[];
   price: number;
   product?: IProduct;
   productId: number;
@@ -70,7 +70,7 @@ export interface IProductResponse {
   details?: ISellerProductDetails[];
   image: string;
   name: string;
-  orderProducts?: OrderProduct[];
+  orderProducts?: IOrderProduct[];
   price: number;
   product?: IProduct;
   productId: number;

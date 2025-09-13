@@ -1,12 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import Category from 'components/categories/Category';
 import ProductCategoryList from 'components/categories/ProductCategoryList';
-import { ScrollView, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { productService } from 'services/productService';
 import { SearchBar } from '../components/inputs/SearchBar';
 
 const Main = () => {
+  const router = useRouter();
+
   const { data: categories = [], isLoading } = useQuery({
     queryKey: ['categories'],
     queryFn: async () => await productService.getCategories(),
@@ -20,13 +23,13 @@ const Main = () => {
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ backgroundColor: 'white', paddingBottom: 100 }}>
+      contentContainerStyle={{ backgroundColor: 'white', paddingBottom: 210 }}>
       <View className={styles.main}>
-        <View className={styles.banner}>
-          <Text>This should be a banner.</Text>
-        </View>
+        <View className={styles.banner}></View>
         <SafeAreaView className={styles.container} style={{ gap: 32 }}>
-          <SearchBar value="" onChange={() => {}} />
+          <TouchableOpacity className="w-full" onPress={() => router.push('/search')}>
+            <SearchBar value="" onChange={() => {}} readOnly />
+          </TouchableOpacity>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -61,7 +64,7 @@ const Main = () => {
 
 const styles = {
   main: ``,
-  banner: `h-1/5 bg-blue-500 items-center justify-center`,
+  banner: `h-1/5 bg-rose-500 items-center justify-center`,
   container: `flex-col items-center px-4`,
   categories: `w-full`,
   productList: `w-full`,
