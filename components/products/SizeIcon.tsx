@@ -1,21 +1,37 @@
 import { ProductSize } from 'interfaces';
-import { Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 
 type Props = {
   size: ProductSize;
+  variant?: 'small' | 'large';
+  onPress?: () => void;
+  selected?: boolean;
 };
 
-const SizeIcon = ({ size }: Props) => {
+const SizeIcon = ({ size, variant = 'small', onPress, selected = false }: Props) => {
   return (
-    <View className={styles.box} style={{ width: 18, height: 18 }}>
-      <Text className={styles.text}>{size}</Text>
-    </View>
+    <Pressable onPress={onPress}>
+      <View
+        className={`items-center justify-center rounded bg-gray-200 outline-gray-200`}
+        style={{
+          width: variant === 'small' ? 18 : 32,
+          height: variant === 'small' ? 18 : 32,
+          outlineWidth: selected ? 4 : 0,
+          outlineOffset: 2,
+          outlineColor: 'gainsboro',
+          outlineStyle: 'solid',
+        }}>
+        <Text className={styles.text} style={{ fontSize: variant === 'small' ? 12 : 16 }}>
+          {size}
+        </Text>
+      </View>
+    </Pressable>
   );
 };
 
 const styles = {
-  box: `items-center justify-center rounded bg-gray-200`,
-  text: `text-sm font-semibold text-gray-500`,
+  outlineColor: `outline-gray-500`,
+  text: `font-semibold text-gray-500`,
 };
 
 export default SizeIcon;

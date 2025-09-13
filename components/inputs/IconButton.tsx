@@ -2,14 +2,16 @@ import { Ionicons } from '@expo/vector-icons';
 import { Pressable } from 'react-native';
 type IconButtonProps = {
   icon: keyof typeof Ionicons.glyphMap;
-  onPress: () => void;
+  onPress?: () => void;
   disabled?: boolean;
+  size?: number;
+  color?: string;
 };
 
-const IconButton = ({ icon, onPress, disabled }: IconButtonProps) => {
+const IconButton = ({ icon, onPress, disabled, size = 20, color = 'gray' }: IconButtonProps) => {
   return (
     <Pressable onPress={onPress} disabled={disabled} className={styles.button}>
-      {icon && <Ionicons name={icon} size={20} color="gray" />}
+      {icon && <Ionicons name={icon} size={size} color={color} />}
     </Pressable>
   );
 };

@@ -1,39 +1,58 @@
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { useRouter } from 'expo-router';
 import { ICategorizedProduct } from 'interfaces';
-import { Image, Text, View } from 'react-native';
-
+import { Image, Pressable, Text, View } from 'react-native';
+import { randomShippingTime } from 'utils/shipping';
 type ProductCardProps = {
   product: ICategorizedProduct;
 };
 
 const ProductCard = ({ product }: ProductCardProps) => {
+  const router = useRouter();
+  const formattedPrice = `R$ ${product.price.toLocaleString('pt-BR', {
+    minimumFractionDigits: 2,
+  })}`;
   return (
-    <View className={styles.card}>
-      <Image
-        source={{ uri: product.image }}
-        style={{ width: 140, height: 140 }}
-        className={styles.image}
-      />
-      <View className={styles.priceContainer}>
-        <Text numberOfLines={1} className={styles.title}>
-          {product.title}
-        </Text>
-        <Text
-          style={{
-            fontSize: 16,
-            fontWeight: '500',
-            color: 'crimson',
-            marginTop: 4,
-          }}>{`R$ ${product.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`}</Text>
+    <Pressable
+      onPress={() => {
+        router.push(`/product/${product.id}`);
+      }}>
+      <View className={styles.card}>
+        <Image
+          source={{ uri: product.image }}
+          style={{ width: 140, height: 140 }}
+          className={styles.image}
+        />
+        <View style={{ paddingTop: 8 }}>
+          <Text numberOfLines={1} className={styles.title}>
+            {product.title}
+          </Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+            <MaterialCommunityIcons name="clock-fast" size={16} color="teal" />
+            <Text numberOfLines={1} className={styles.shippingText}>
+              {randomShippingTime()} min
+            </Text>
+          </View>
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: '500',
+              color: 'crimson',
+              marginTop: 4,
+            }}>
+            {product.price && formattedPrice}
+          </Text>
+        </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
 const styles = {
   card: `w-[140px] overflow-hidden`,
-  priceContainer: `space-y-1 mt-2 flex-1 px-1`,
   image: `rounded-lg bg-gray-200`,
   title: `text-sm font-semibold`,
+  shippingText: `text-sm text-teal-600`,
   description: `text-xs text-gray-600`,
 };
 

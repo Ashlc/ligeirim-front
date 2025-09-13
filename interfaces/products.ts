@@ -14,7 +14,7 @@ export interface IProduct {
   category?: IProductCategory;
   name: string;
   sellerProducts?: ISellerProduct[];
-  categoryId: number;
+  categoryId?: number;
 }
 
 export type CareLevel = 'BAIXO' | 'MEDIO' | 'ALTO';
@@ -50,7 +50,7 @@ export interface ISellerProductDetails {
   id: number;
   color: ProductColor;
   sellerProduct?: ISellerProduct;
-  sellerProductId: string;
+  sellerProductId?: string;
   size: ProductSize;
   stock: number;
 }
@@ -65,19 +65,22 @@ export interface IProductResponse {
   id: number;
   careLevel: CareLevel;
   category?: IProductCategory;
-  categoryId: number;
   description: string;
   details?: ISellerProductDetails[];
   image: string;
-  name: string;
   orderProducts?: IOrderProduct[];
   price: number;
   product?: IProduct;
-  productId: number;
-  seller?: ISeller;
-  sellerId: number;
+  seller?: {
+    id: 1;
+    realName: 'Loja do João';
+    image: string;
+  };
   sellerProducts?: ISellerProduct[];
   title: string;
+  quantity?: number;
+  size?: ProductSize;
+  color?: ProductColor;
 }
 
 export interface ICategorizedProduct {

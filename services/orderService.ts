@@ -19,7 +19,14 @@ const getUserOrders = async (userId: number): Promise<IOrder[]> => {
           id: 2,
           name: 'Loja Exemplo',
           phone: '123456789',
-          address: 'Rua Exemplo, 123',
+          address: {
+            street: 'Rua Exemplo',
+            number: '123',
+            city: 'Cidade',
+            state: 'Estado',
+            zipCode: '00000-000',
+            country: 'País',
+          },
           identifier: '00.000.000/0001-00',
           documentPath: '',
         },
@@ -65,7 +72,14 @@ const getUserOrders = async (userId: number): Promise<IOrder[]> => {
           id: 2,
           name: 'Loja Exemplo',
           phone: '123456789',
-          address: 'Rua Exemplo, 123',
+          address: {
+            street: 'Rua Exemplo',
+            number: '123',
+            city: 'Cidade',
+            state: 'Estado',
+            zipCode: '00000-000',
+            country: 'País',
+          },
           identifier: '00.000.000/0001-00',
           documentPath: '',
         },
@@ -99,7 +113,14 @@ const getUserOrders = async (userId: number): Promise<IOrder[]> => {
           id: 2,
           name: 'Loja Exemplo',
           phone: '123456789',
-          address: 'Rua Exemplo, 123',
+          address: {
+            street: 'Rua Exemplo',
+            number: '123',
+            city: 'Cidade',
+            state: 'Estado',
+            zipCode: '00000-000',
+            country: 'País',
+          },
           identifier: '00.000.000/0001-00',
           documentPath: '',
         },
@@ -119,6 +140,52 @@ const getUserOrders = async (userId: number): Promise<IOrder[]> => {
   ];
 };
 
+const getDraftOrder = async (): Promise<IOrder | null> => {
+  // Simulação de chamada à API para obter o pedido rascunho do usuário
+  return {
+    id: 3,
+    clientId: 1,
+    totalPrice: 75.5,
+    paymentMethod: 'CARTAO',
+    status: 'DRAFT',
+    completeDate: '2023-03-20',
+    seller: {
+      id: 1,
+      realName: 'Loja Exemplo',
+      userId: 2,
+      bankingInfoId: 1,
+      image: 'https://via.placeholder.com/150',
+      user: {
+        id: 2,
+        name: 'Loja Exemplo',
+        phone: '123456789',
+        address: {
+          street: 'Rua Exemplo',
+          number: '123',
+          city: 'Cidade',
+          state: 'Estado',
+          zipCode: '00000-000',
+          country: 'País',
+        }, 
+        identifier: '00.000.000/0001-00',
+        documentPath: '',
+      },
+    },
+    products: [
+      {
+        id: 3,
+        quantity: 3,
+        orderId: 3,
+        sellerProductId: 'SP003',
+        title: 'Produto 3',
+        price: 75.5,
+        image: 'https://via.placeholder.com/150',
+      },
+    ],
+  };
+}
+
 export const orderService = {
   getUserOrders,
+  getDraftOrder,
 };

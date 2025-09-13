@@ -1,21 +1,14 @@
 import { ISellerProduct, ProductColor, ProductSize } from './products';
-import { ISeller, IUser } from './users';
-
-export interface Client {
-  id: number;
-  userId: number;
-  user?: IUser;
-  orders?: IOrder[];
-  cardInfos?: CardInfo[];
-}
+import { IClient, ISeller } from './users';
 
 export interface CardInfo {
   id: number;
+  brand: string;
   expirationDate: string;
-  number: number;
-  securityCode: number;
+  last4: string;
+  securityCode?: number;
   clientId: number;
-  client?: Client;
+  client?: IClient;
 }
 
 export type PaymentMethod = 'CARTAO' | 'PIX';
@@ -28,7 +21,7 @@ export interface IOrder {
   paymentMethod: PaymentMethod;
   status: OrderStatus;
   completeDate: string;
-  client?: Client;
+  client?: IClient;
   quantity?: number;
   color?: ProductColor;
   seller: ISeller;

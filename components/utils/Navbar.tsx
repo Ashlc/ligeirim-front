@@ -18,6 +18,11 @@ const Navbar = () => {
       route: '/search',
     },
     {
+      name: 'Carrinho',
+      icon: 'cart-outline',
+      route: '/cart',
+    },
+    {
       name: 'Pedidos',
       icon: 'bag-handle-outline',
       route: '/orders',

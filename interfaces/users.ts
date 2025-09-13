@@ -1,18 +1,27 @@
-import { Client } from './orders';
-import { SellerProduct } from './products';
+import { CardInfo, IOrder } from './orders';
+import { ISellerProduct } from './products';
 
 export type DriverCategory = 'BIKE' | 'MOTORCYCLE' | 'CAR';
+
+export interface IAddress {
+  street: string;
+  number: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country: string;
+}
 
 export interface IUser {
   id: number;
   name: string;
   phone: string;
-  address: string;
+  address: IAddress;
   identifier: string;
   documentPath: string;
   seller?: ISeller;
   driver?: IDriver;
-  client?: Client;
+  client?: IClient;
 }
 
 export interface IBankingInfo {
@@ -44,5 +53,23 @@ export interface ISeller {
   user?: IUser;
   image: string;
   bankingInfo?: IBankingInfo;
-  products?: SellerProduct[];
+  products?: ISellerProduct[];
+}
+
+export interface IClient {
+  id: number;
+  userId: number;
+  user?: IUser;
+  orders?: IOrder[];
+  cardInfos?: CardInfo[];
+}
+
+export interface IUserProfile {
+  id: number;
+  name: string;
+  phone: string;
+  identifier: string;
+  documentPath: string;
+  address: IAddress;
+  cardsInfos: CardInfo[];
 }

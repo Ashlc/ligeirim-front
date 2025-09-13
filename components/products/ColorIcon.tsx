@@ -1,11 +1,14 @@
 import { ProductColor } from 'interfaces';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 
 type ColorIconProps = {
   color: ProductColor;
+  variant?: 'small' | 'large';
+  onPress?: () => void;
+  selected?: boolean;
 };
 
-const ColorIcon = ({ color }: ColorIconProps) => {
+const ColorIcon = ({ color, variant = 'small', onPress, selected = false }: ColorIconProps) => {
   const colors: Record<ProductColor, string> = {
     AMARELO: 'bg-yellow-500',
     AZUL: 'bg-blue-500',
@@ -19,10 +22,18 @@ const ColorIcon = ({ color }: ColorIconProps) => {
     VERMELHO: 'bg-red-500',
   };
   return (
-    <View
-      style={{ width: 16, height: 16 }}
-      className={`${colors[color]} rounded-full border border-gray-200`}
-    />
+    <Pressable onPress={onPress}>
+      <View
+        style={{
+          width: variant === 'small' ? 16 : 32,
+          height: variant === 'small' ? 16 : 32,
+          outlineColor: 'gainsboro',
+          outlineWidth: selected ? 4 : 0,
+          outlineStyle: 'solid',
+        }}
+        className={`${colors[color]} rounded-full border border-gray-200`}
+      />
+    </Pressable>
   );
 };
 

@@ -1,4 +1,4 @@
-import { ICategorized, IProductCategory } from './../interfaces/products';
+import { ICategorized, IProductCategory, IProductResponse } from './../interfaces/products';
 
 const getCategories = async (): Promise<IProductCategory[]> => {
   return [
@@ -189,8 +189,41 @@ const getCategoryById = async (id: number): Promise<IProductCategory | null> => 
   return categories.find((category) => category.id === id) || null;
 };
 
+const getProductById = async (id: number): Promise<IProductResponse | null> => {
+  return {
+    careLevel: 'BAIXO',
+    description: 'Camiseta confortável de algodão',
+    details: [
+      {
+        color: 'AZUL',
+        id: 1,
+        size: 'M',
+        stock: 100,
+      },
+    ],
+    id: 1,
+    image: 'http://exemplo.com/imagens/camiseta.jpg',
+    price: 60,
+    product: {
+      category: {
+        id: 1,
+        name: 'Roupas',
+      },
+      id: 1,
+      name: 'Camiseta',
+    },
+    seller: {
+      id: 1,
+      realName: 'Loja do João',
+      image: 'https://example.com/imagens/loja.jpg',
+    },
+    title: 'Camiseta Básica Azul',
+  };
+};
+
 export const productService = {
   getCategories,
   getCategorizedProducts,
   getCategoryById,
+  getProductById,
 };
