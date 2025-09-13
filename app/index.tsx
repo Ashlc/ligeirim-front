@@ -35,12 +35,12 @@ const Main = () => {
             showsHorizontalScrollIndicator={false}
             className={styles.categories}
             contentContainerStyle={{ paddingVertical: 8 }}>
-            <View className={styles.categoryContainer}>
+            <View className={styles.categoryContainer} style={{ gap: 12 }}>
               {!isLoading &&
-                categories.map((category) => (
+                categories.map((category, i) => (
                   <Category
                     id={category.id}
-                    key={category.id}
+                    key={`category-${i}-${category.id}`}
                     icon={category.icon || 'pricetag'}
                     name={category.name}
                   />
