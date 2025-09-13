@@ -78,97 +78,31 @@ const getProducts = async ({
 }: {
   query: string;
   category: number | null;
-}): Promise<IProductResponse[]> => {
-  return [
-    {
-      careLevel: 'BAIXO',
-      description: 'Camiseta confortável de algodão',
-      details: [
-        {
-          color: 'AZUL',
-          id: 1,
+}): Promise<IProductResponse[] | null> => {
+  try {
+    const params = new URLSearchParams();
+    if (query) params.append("query", query);
+    if (category !== null) params.append("categoryId", category.toString());
 
-          size: 'M',
-          stock: 100,
-        },
-      ],
-      id: 1,
-      image: 'http://exemplo.com/imagens/camiseta.jpg',
-      price: 60,
-      product: {
-        category: {
-          id: 1,
-          name: 'Roupas',
-        },
-        id: 1,
-        name: 'Camiseta',
+    const url = `${BASE_URL}/products/${params.toString() ? `?${params.toString()}` : ""}`;
+
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
       },
-      seller: {
-        id: 1,
-        realName: 'Loja do João',
-        image: 'https://example.com/imagens/loja.jpg',
-      },
-      title: 'Camiseta Básica Azul',
-    },
-    {
-      careLevel: 'MEDIO',
-      description: 'Calça jeans confortável com elastano',
-      details: [
-        {
-          color: 'PRETO',
-          id: 2,
-          size: 'G',
-          stock: 50,
-        },
-      ],
-      id: 2,
-      image: 'http://exemplo.com/imagens/calca.jpg',
-      price: 120,
-      product: {
-        category: {
-          id: 1,
-          name: 'Roupas',
-        },
-        id: 2,
-        name: 'Calça Jeans',
-      },
-      seller: {
-        id: 2,
-        realName: 'Moda Store',
-        image: 'https://example.com/imagens/moda.jpg',
-      },
-      title: 'Calça Jeans Preta',
-    },
-    {
-      careLevel: 'ALTO',
-      description: 'Jaqueta de couro sintético',
-      details: [
-        {
-          color: 'PRETO',
-          id: 3,
-          size: 'M',
-          stock: 30,
-        },
-      ],
-      id: 3,
-      image: 'http://exemplo.com/imagens/jaqueta.jpg',
-      price: 250,
-      product: {
-        category: {
-          id: 1,
-          name: 'Roupas',
-        },
-        id: 3,
-        name: 'Jaqueta de Couro',
-      },
-      seller: {
-        id: 3,
-        realName: 'Estilo Fashion',
-        image: 'https://example.com/imagens/estilo.jpg',
-      },
-      title: 'Jaqueta de Couro Sintético',
-    },
-  ];
+    });
+
+    if (!res.ok) {
+      throw new Error(`Erro ao buscar produtos: ${res.status}`);
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.error("Erro na chamada getProducts:", err);
+    return null;
+  }
 };
 
 export const productService = {
